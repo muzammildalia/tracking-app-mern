@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.footer {
+    color: white;
+    padding: 25px;
+    background: -webkit-linear-gradient(to right,
+            #434343,
+            #0000);
+    background: linear-gradient(to right, #434343, #000000);
+}
+
+.footer a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer a:hover {
+    color: #ffefba;
+    border-bottom: 1px solid #ffefba;
+}
+
+.register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    flex-direction: column;
+}
