@@ -19,45 +19,51 @@ const Header = () => {
     }
     return (
         <div>
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+            <nav className="navbar navbar-expand-lg navbar-dark">
+                <div className="container-fluid">
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"><Logo /></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
 
-                        <Link to='/' class="navbar-brand" ><Logo /></Link>
+                        <Link to='/' className="navbar-brand" ><Logo /></Link>
 
 
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <Link to='/' class="nav-link" >Home</Link>
+                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <Link to='/' className="nav-link" >Home</Link>
                             </li>
-                            <li class="nav-item">
-                                <Link to='/category' class="nav-link" >Categories</Link>
+                            <li className="nav-item">
+                                <Link to='/category' className="nav-link" >Categories</Link>
                             </li>
                             {
                                 !auth.user ?
                                     (
                                         <>
-                                            <li class="nav-item">
-                                                <Link to='/register' class="nav-link" >REGISTER</Link>
+                                            <li className="nav-item">
+                                                <Link to='/register' className="nav-link" >REGISTER</Link>
                                             </li>
-                                            <li class="nav-item">
-                                                <Link to='/login' class="nav-link" href="#">LOGIN</Link>
+                                            <li className="nav-item">
+                                                <Link to='/login' className="nav-link" href="#">LOGIN</Link>
                                             </li>
                                         </>
                                     ) : (
                                         <>
-                                            <li class="nav-item">
-                                                <Link to='/login' onClick={handleLogout} class="nav-link" href="#">LOGOUT</Link>
+                                            <li className="nav-item dropdown">
+                                                <Link className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    {auth.user?.name}
+                                                </Link>
+                                                <ul className="dropdown-menu">
+                                                    <li><Link to='/profile' className="dropdown-item" >Profile</Link></li>
+                                                    <li><Link to='/activity' className="dropdown-item" >Add Activity</Link></li>
+                                                </ul>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Link to='/login' onClick={handleLogout} className="nav-link" href="#">LOGOUT</Link>
                                             </li>
                                         </>
                                     )
                             }
-                            <li class="nav-item">
-                                <Link to='/cart' class="nav-link" href="#">Cart(0)</Link>
-                            </li>
                         </ul>
 
                     </div>
