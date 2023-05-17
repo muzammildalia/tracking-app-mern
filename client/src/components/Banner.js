@@ -1,5 +1,5 @@
 import React from 'react'
-import bg from "../Assets/img_1.jpg";
+import bg from "../Assets/img_23.jpg";
 import styled from 'styled-components'
 
 import WithBarTitle from '../components/reusable/WithBarTitle';
@@ -9,27 +9,22 @@ import { FaPlay } from "react-icons/fa";
 import Layout from './layouts/Layout';
 import Header from './layouts/Header';
 const Banner = () => {
-    return (
-        <div>
-            <Main>
-                <Header />
-                <Container>
-                    <RightBox>
-                        <WithBarTitle title="WITH Fitness Guru" />
-                        <H1>Build Perfect body shape for good and healthy life.</H1>
-                        <Button animation="fadeInLeft">Became a member</Button>
-                    </RightBox>
-                    <LeftBox>
-                        {/* <Circle>
-                            <CircleButton>
-                                <FaPlay />
-                            </CircleButton>
-                        </Circle> */}
-                    </LeftBox>
-                </Container>
-            </Main>
-        </div>
-    )
+  return (
+    <div>
+      <Main>
+        <Header />
+        <Container>
+          <RightBox>
+            <WithBarTitle title="WITH Fitness Guru" />
+            <H1>Build Perfect body shape for good and healthy life.</H1>
+            <Button animation="fadeInLeft">Became a member</Button>
+          </RightBox>
+          <LeftBox>
+          </LeftBox>
+        </Container>
+      </Main>
+    </div>
+  )
 }
 
 const Main = styled.div`

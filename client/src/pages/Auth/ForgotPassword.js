@@ -3,6 +3,7 @@ import Layout from '../../components/layouts/Layout'
 import { toast } from 'react-hot-toast'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Header from '../../components/layouts/Header'
 
 
 const ForgotPassword = () => {
@@ -36,6 +37,7 @@ const ForgotPassword = () => {
     };
     return (
         <Layout>
+            <Header />
             <div className='register'>
                 <h1> Forgot Password </h1> <br />
                 <form onSubmit={handlesubmit}>

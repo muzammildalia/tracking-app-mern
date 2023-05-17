@@ -1,4 +1,5 @@
 import React from 'react'
+import ActivityLog from '../components/ActivityLog';
 
 import Banner from '../components/Banner';
 import Footer from '../components/layouts/Footer';
@@ -10,7 +11,8 @@ const HomePage = () => {
     return (
         <>
             <Banner />
-            <pre>{JSON.stringify(auth, null, 4)}</pre>
+            <ActivityLog />
+            {/* <pre>{JSON.stringify(auth, null, 4)}</pre> */}
 
             <Footer />
         </>

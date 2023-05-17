@@ -12,6 +12,7 @@ import Login from './pages/Auth/Login';
 import Dashboard from './pages/user/Dashboard';
 import PrivateRoute from './components/Routes/Private.js';
 import ForgotPassword from './pages/Auth/ForgotPassword';
+import Activity from './pages/user/Activity';
 
 const App = () => {
   return (
@@ -20,6 +21,9 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="" element={<Dashboard />} />
+        </Route>
+        <Route path="/activity" element={<PrivateRoute />}>
+          <Route path="" element={<Activity />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

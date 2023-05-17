@@ -1,5 +1,4 @@
 import React from 'react'
-import Header from './Header'
 import Footer from './Footer'
 import { Helmet } from 'react-helmet'
 import { Toaster, Tosster } from "react-hot-toast"
@@ -16,7 +15,6 @@ const Layout = ({ children, title, description, keywords, author }) => {
                 <meta name='author' content={author} />
                 <title>{title}</title>
             </Helmet>
-            <Header />
             <main style={{ minHeight: "70vh" }}>
                 <Toaster />
                 {children}
@@ -28,10 +26,10 @@ const Layout = ({ children, title, description, keywords, author }) => {
 };
 
 Layout.defaultProps = {
-    title: "Ecommerce App",
+    title: "Tracking-App",
     description: "mern project",
     keywords: "mern,node,react,mongodb",
-    author: "Muzammil Dalia"
+    author: "Muzammil Dalia,Muhammad Danish & Abdul Wahab"
 }
 
 export default Layout
