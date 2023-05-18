@@ -1,31 +1,31 @@
-import React from 'react'
+import React from "react";
 import bg from "../Assets/img_23.jpg";
-import styled from 'styled-components'
+import styled from "styled-components";
 
-import WithBarTitle from '../components/reusable/WithBarTitle';
-import Button from '../components/reusable/Button'
-import H1 from '../components/reusable/H1'
+import WithBarTitle from "../components/reusable/WithBarTitle";
+import Button from "../components/reusable/Button";
+import H1 from "../components/reusable/H1";
 import { FaPlay } from "react-icons/fa";
-import Layout from './layouts/Layout';
-import Header from './layouts/Header';
+import Layout from "./layouts/Layout";
+import Header from "./layouts/Header";
 const Banner = () => {
   return (
     <div>
+      {/*  */}
       <Main>
-        <Header />
+        <Header isDark={true} />
         <Container>
           <RightBox>
             <WithBarTitle title="WITH Fitness Guru" />
             <H1>Build Perfect body shape for good and healthy life.</H1>
             <Button animation="fadeInLeft">Became a member</Button>
           </RightBox>
-          <LeftBox>
-          </LeftBox>
+          <LeftBox></LeftBox>
         </Container>
       </Main>
     </div>
-  )
-}
+  );
+};
 
 const Main = styled.div`
   width: 100%;
@@ -79,4 +79,4 @@ const CircleButton = styled.button`
   border: none;
   cursor: pointer;
 `;
-export default Banner
+export default Banner;
