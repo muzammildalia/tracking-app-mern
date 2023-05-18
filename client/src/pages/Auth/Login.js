@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
-import Header from '../../components/layouts/Header'
+import Header from "../../components/layouts/Header";
 import "./style.css";
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,7 +39,7 @@ const Login = () => {
   };
   return (
     <Layout>
-      <Header />
+      <Header isDark={false} />
       {/* <div className="register"> */}
       <div className="login template d-flex justify-content-center align-items-center vh-100 bg-dark bg-gradient">
         <div className="form_container 50-w p-5 rounded bg-white">
