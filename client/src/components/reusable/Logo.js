@@ -32,5 +32,4 @@ const Img = styled.p`
 `;
 const Title = styled.p`
   font-size: 36px;
-  color: white;
 `;
