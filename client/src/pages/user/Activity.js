@@ -29,10 +29,10 @@ const Activity = () => {
                                 />
                             </div>
                             <div class="mb-2">
-                                <label htmlFor="email">Description</label>
+                                <label htmlFor="des">Description</label>
 
                                 <input
-                                    type="email"
+                                    type="text"
                                     // value={email}
                                     // onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Description"
@@ -46,7 +46,7 @@ const Activity = () => {
                                 <label htmlFor="password">Activity Type</label>
 
                                 <input
-                                    type="password"
+                                    type="text"
                                     // value={password}
                                     // onChange={(e) => setpassword(e.target.value)}
                                     placeholder="Define Activity Type"
@@ -56,7 +56,7 @@ const Activity = () => {
                                 />
                             </div>
                             <div class="mb-2">
-                                <label htmlFor="phone">Duration</label>
+                                <label htmlFor="time">Duration</label>
 
                                 <input
                                     type="time"
@@ -70,7 +70,7 @@ const Activity = () => {
                                 />
                             </div>
                             <div class="mb-2">
-                                <label htmlFor="address">Date</label>
+                                <label htmlFor="date">Date</label>
                                 <input
                                     type="date"
                                     // value={address}
