@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const activitySchema = new mongoose.Schema({
+    person: {
+        type: mongoose.ObjectId,
+        ref: "users",
+    },
     title: {
         type: String,
         required: true,
@@ -13,15 +17,13 @@ const activitySchema = new mongoose.Schema({
     activity_type: {
         type: String,
         required: true,
-        unique: true,
     },
     duration: {
         type: String,
         required: true,
-        unique: true,
     },
     date: {
-        type: String,
+        type: Date,
         required: true,
     },
     slug: {

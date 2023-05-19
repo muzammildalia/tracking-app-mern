@@ -1,12 +1,43 @@
-import React from 'react'
-
+import React, { useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-// import "./style.css";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/layouts/Header";
 const Activity = () => {
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [activity_type, setactivity_type] = useState("");
+    const [duration, setDuration] = useState();
+    const [date, setDate] = useState();
+
+    const navigate = useNavigate();
+
+    const handlesubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.get(
+                `${process.env.REACT_APP_API}/api/v1/activity/create-activity`,
+                {
+                    title,
+                    description,
+                    activity_type,
+                    duration,
+                    date
+                }
+            );
+            if (res && res.data.success) {
+                navigate("/");
+                toast.success(res.data.message);
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went Wrong");
+        }
+    };
+
     return (
         <div>
             <Layout>
@@ -15,14 +46,14 @@ const Activity = () => {
                 <div className="signup template d-flex justify-content-center align-items-center pt-3 pb-5 vh-70 bg-dark bg-gradient">
                     <div className="form_container 50-w p-5 rounded bg-white">
                         {/* <h1> Register Page </h1> */}
-                        <form >
+                        <form onSubmit={handlesubmit}>
                             <h3 className="text-center"> Activity Page </h3>
                             <label htmlFor="name">Title</label>
                             <div class="mb-2">
                                 <input
                                     type="text"
-                                    // value={name}
-                                    // onChange={(e) => setName(e.target.value)}
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
                                     placeholder="Activity Title"
                                     class="form-control"
                                     required
@@ -33,8 +64,8 @@ const Activity = () => {
 
                                 <input
                                     type="text"
-                                    // value={email}
-                                    // onChange={(e) => setEmail(e.target.value)}
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
                                     placeholder="Description"
                                     class="form-control"
                                     id="exampleInputEmail1"
@@ -43,12 +74,12 @@ const Activity = () => {
                                 />
                             </div>
                             <div class="mb-2">
-                                <label htmlFor="password">Activity Type</label>
+                                <label htmlFor="Activity-Type">Activity Type</label>
 
                                 <input
                                     type="text"
-                                    // value={password}
-                                    // onChange={(e) => setpassword(e.target.value)}
+                                    value={activity_type}
+                                    onChange={(e) => setactivity_type(e.target.value)}
                                     placeholder="Define Activity Type"
                                     class="form-control"
                                     id="exampleInputPassword1"
@@ -59,11 +90,11 @@ const Activity = () => {
                                 <label htmlFor="time">Duration</label>
 
                                 <input
-                                    type="time"
+                                    type="text"
                                     step="2"
-                                    // value={phone}
-                                    // onChange={(e) => setPhone(e.target.value)}
-                                    placeholder="Set Duration"
+                                    value={duration}
+                                    onChange={(e) => setDuration(e.target.value)}
+                                    placeholder="Set Duration in format (DD/MM/YYYY)"
                                     class="form-control"
                                     id="exampleInputPassword1"
                                     required
@@ -73,8 +104,8 @@ const Activity = () => {
                                 <label htmlFor="date">Date</label>
                                 <input
                                     type="date"
-                                    // value={address}
-                                    // onChange={(e) => setAddress(e.target.value)}
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}
                                     placeholder="Select Date"
                                     class="form-control"
                                     id="exampleInputPassword1"

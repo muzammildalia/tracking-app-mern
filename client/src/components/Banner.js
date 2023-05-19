@@ -8,6 +8,7 @@ import H1 from "../components/reusable/H1";
 import { FaPlay } from "react-icons/fa";
 import Layout from "./layouts/Layout";
 import Header from "./layouts/Header";
+import { Link } from "react-router-dom";
 const Banner = () => {
   return (
     <div>
@@ -20,7 +21,7 @@ const Banner = () => {
             <h2 className="Build">
               Build Perfect body shape for good and healthy life.
             </h2>
-            <Button animation="fadeInLeft">Became a member</Button>
+            <Link to="/activity"><Button animation="fadeInLeft">Track Your Fitness</Button></Link>
           </RightBox>
           <LeftBox></LeftBox>
         </Container>

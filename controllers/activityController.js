@@ -2,7 +2,7 @@ import ActivityModel from "../models/ActivityModel.js";
 
 export const createActivityController = async (req, res) => {
     try {
-        const [{ title, description, activity_type, duration, date }] = req.body;
+        const { title, description, activity_type, duration, date } = req.body;
         if (!title) {
             return res.status(401).send({
                 message: "Title is required"
@@ -28,25 +28,50 @@ export const createActivityController = async (req, res) => {
                 message: "date is required"
             })
         }
-        const existingActivity = await ActivityModel.findOne({ title })
+        const existingActivity = await ActivityModel.findOne({ title });
         if (existingActivity) {
             return res.status(200).send({
                 success: false,
-                message: "Activity already exists"
-            })
+                message: 'Activity already exists'
+            });
         }
-        const activity = await new ActivityModel({ title, slug: slugify(title) }).save()
+        const activity = await new ActivityModel({
+            title,
+            description,
+            activity_type,
+            duration,
+            date
+        }).save();
+
         res.status(201).send({
             success: true,
-            message: "Activity Successfully Saved",
+            message: 'Activity Successfully Saved',
             activity
-        })
+        });
     } catch (error) {
         console.log(error);
         res.status(500).send({
             success: false,
-            message: "Error in creatings activity",
-            error,
+            message: 'Error in creating activity',
+            error
+        });
+    }
+};
+
+export const getActivityController = async (req, res) => {
+    try {
+        const activity = await ActivityModel.find({})
+        res.status(201).send({
+            success: true,
+            message: "Loading Activities Successfull",
+            activity
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: "cannot Get Activities",
+            error
         })
     }
 };
