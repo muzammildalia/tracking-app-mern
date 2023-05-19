@@ -8,7 +8,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Teko', sans-serif;
+  font-family: "Teko", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -20,7 +20,6 @@ body {
 
 .dropdown .dropdown-menu {
   background-color: transparent;
-
 }
 
 .dropdown-item {
@@ -33,3 +32,23 @@ body {
   border: 1px solid white;
   color: white;
 }
+.Build {
+  font-size: 3.2rem;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 24px 0px;
+  color: white;
+
+  animation: fadeInLeft;
+  animation-duration: 1.3s;
+}
+@media (max-width: 998px) {
+  .Build {
+    font-size: 3rem;
+  }
+}
+/* @media (max-width: 998px) {
+  html {
+    font-size: 100%;
+  }
+} */

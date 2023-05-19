@@ -1,13 +1,33 @@
-.form_container {
+/* .form_container {
   width: 30%;
-}
-@media screen and (max-width: 1000px) {
+} */
+
+/* @media screen and (min-width: 900px) {
   .form_continer {
-    width: 45%;
+    width: 30%;
   }
-}
-@media screen and (max-width: 700px) {
+} */
+/* @media screen and (min-width: 250px) and (max-width: 700px) {
+  .form_continer {
+    width: 60%;
+  }
+} */
+/* @media screen and (min-width: 250px) {
   .form_continer {
     width: 65%;
   }
-}
+} */
+/* @media only screen and (max-width: 375px) {
+  .form_container {
+    height: auto;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+} */
+/* @media only screen and (max-width: 767px) {
+  .form_container {
+    height: auto;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+} */

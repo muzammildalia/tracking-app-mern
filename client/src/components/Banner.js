@@ -17,7 +17,9 @@ const Banner = () => {
         <Container>
           <RightBox>
             <WithBarTitle title="WITH Fitness Guru" />
-            <H1>Build Perfect body shape for good and healthy life.</H1>
+            <h2 className="Build">
+              Build Perfect body shape for good and healthy life.
+            </h2>
             <Button animation="fadeInLeft">Became a member</Button>
           </RightBox>
           <LeftBox></LeftBox>
@@ -36,7 +38,17 @@ const Main = styled.div`
   background-size: cover;
   position: relative;
   overflow: hidden;
+  @media only screen and (max-width: 768px) {
+    height: auto;
+    background-attachment: scroll;
+    background-size: auto;
+  }
 `;
+// @media only screen and (max-width: 480px) {
+//   height: auto;
+//   width: 100%;
+//   background-attachment: scroll;
+// }
 const Container = styled.div`
   width: 100%;
   height: 90%;

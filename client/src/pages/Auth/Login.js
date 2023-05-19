@@ -41,7 +41,8 @@ const Login = () => {
     <Layout>
       <Header isDark={false} />
       {/* <div className="register"> */}
-      <div className="login template d-flex justify-content-center align-items-center vh-100 bg-dark bg-gradient">
+
+      <div className="login template d-flex justify-content-center align-items-center vh-100  bg-dark bg-gradient">
         <div className="form_container 50-w p-5 rounded bg-white">
           {/* <h1> Login Page </h1> <br /> */}
 

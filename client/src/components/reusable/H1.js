@@ -8,9 +8,9 @@ export default function H1({ children, color, style }) {
     </Title>
   );
 }
-
+// font-size:60px
 const Title = styled.h1`
-  font-size: 60px;
+  font-size: 3.2rem;
   text-transform: uppercase;
   line-height: 1.1;
   margin: 24px 0px;
