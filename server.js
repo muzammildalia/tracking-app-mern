@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import connectDb from './config/db.js';
 import authRoute from './routes/authRoute.js';
+import activityRoute from './routes/activityRoute.js';
 import cors from 'cors'
 
 
@@ -24,7 +25,7 @@ app.use(morgan('dev'));
 
 //routes
 app.use("/api/v1/auth", authRoute);
-
+app.use("/api/v1/activity", activityRoute);
 
 app.get('/', (req, res) => {
     res.send({
