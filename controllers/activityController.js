@@ -2,7 +2,8 @@ import ActivityModel from "../models/ActivityModel.js";
 import userModel from "../models/userModel.js";
 export const createActivityController = async (req, res) => {
     try {
-        const { personId, title, description, activityType, duration, date } = req.body;
+        const { title, description, activityType, duration, date } = req.body;
+        const userId = req.user._id;
         if (!title) {
             return res.status(401).send({
                 message: "Title is required"
@@ -35,8 +36,15 @@ export const createActivityController = async (req, res) => {
                 message: 'Activity already exists'
             });
         }
+        const existingUser = await userModel.findById(userId);
+        if (!existingUser) {
+            return res.status(404).send({
+                success: false,
+                message: 'User not found',
+            });
+        }
         const activity = await new ActivityModel({
-            person: personId,
+            person: userId,
             title,
             description,
             activity_type: activityType,
@@ -47,7 +55,18 @@ export const createActivityController = async (req, res) => {
         res.status(201).send({
             success: true,
             message: 'Activity Successfully Saved',
-            activity
+            activity: {
+                _id: activity._id,
+                title: activity.title,
+                description: activity.description,
+                activity_type: activity.activity_type,
+                duration: activity.duration,
+                date: activity.date,
+                person: {
+                    _id: existingUser._id,
+                    name: existingUser.name
+                }
+            }
         });
     } catch (error) {
         console.log(error);
@@ -105,5 +124,18 @@ export const getactivitController = async (req, res) => {
             message: "Error WHile Geting Activities",
             error,
         });
+    }
+};
+
+
+
+export const getUserActivitiesController = async (req, res) => {
+    const { userId } = req.params; // Assuming the user ID is passed as a route parameter
+
+    try {
+        const activities = await ActivityModel.find({ person: userId }).exec();
+        res.status(200).send(activities);
+    } catch (error) {
+        res.status(500).send({ message: 'Failed to fetch user activities.' });
     }
 };

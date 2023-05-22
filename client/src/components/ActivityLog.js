@@ -4,7 +4,7 @@ import axios from "axios";
 import { useAuth } from "../context/auth";
 // import { Link, useNavigate } from "react-router-dom";
 
-const ActivityLog = ({ userId }) => {
+const ActivityLog = () => {
     const [activities, setActivities] = useState([]);
     const [auth] = useAuth();
 
@@ -21,10 +21,10 @@ const ActivityLog = ({ userId }) => {
 
     const getAllActivities = async (userId) => {
         try {
-            const response = await axios.get(
+            const { data } = await axios.get(
                 `${process.env.REACT_APP_API}/api/v1/activity/get-activity`)
-            if (response.data.success) {
-                setActivities(response.data.activity);
+            if (data.success) {
+                setActivities(data.activity);
             }
 
         } catch (error) {
@@ -44,6 +44,7 @@ const ActivityLog = ({ userId }) => {
                         <h1 className='display-6 fw-bolder text-center'>Activity Logs</h1>
                         <hr />
                         <div className="row justify-content-center">
+                            {console.log(activities)}
                             {activities.map((activity) => (
                                 <div class="card text-white bg-dark mx-3 my-3" style={{ width: '18rem' }}>
                                     <div class="card-header" key={activity._id}>{activity.title}</div>
@@ -65,29 +66,6 @@ const ActivityLog = ({ userId }) => {
                 </div>
 
             </div>
-            {/* <div className="row justify-content-center">
-                <div class="card text-white bg-dark mx-3 my-3" style={{ width: '18rem' }}>
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Dark card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-                <div class="card text-white bg-dark mx-3 my-3" style={{ width: '18rem' }}>
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Dark card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-                <div class="card text-white bg-dark mx-3 my-3" style={{ width: '18rem' }}>
-                    <div class="card-header">Header</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Dark card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div> */}
         </>
     )
 }

@@ -1,6 +1,6 @@
 import express from 'express';
 import { requireSignIn } from '../middleware/authMiddleware.js';
-import { createActivityController, getactivitController, getUserActivities } from '../controllers/activityController.js';
+import { createActivityController, getactivitController, getUserActivities, getUserActivitiesController } from '../controllers/activityController.js';
 
 
 
@@ -23,6 +23,6 @@ router.post('/create-activity', requireSignIn, createActivityController)
 //     }
 // });
 
-router.get('/get-activity', requireSignIn, getactivitController)
+router.get("/user-activities/:userId", requireSignIn, getUserActivitiesController);
 
 export default router;
