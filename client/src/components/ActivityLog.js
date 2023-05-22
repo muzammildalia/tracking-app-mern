@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { useAuth } from "../context/auth";
 // import { Link, useNavigate } from "react-router-dom";
 
-const ActivityLog = () => {
+const ActivityLog = ({ userId }) => {
     const [activities, setActivities] = useState([]);
+    const [auth] = useAuth();
 
-    const getAllActivities = async () => {
+
+
+    useEffect(() => {
+        if (auth.user) {
+            getAllActivities(auth.user.userId);
+        }
+    }, [auth]);
+
+
+
+
+    const getAllActivities = async (userId) => {
         try {
-            const { data } = await axios.get(
+            const response = await axios.get(
                 `${process.env.REACT_APP_API}/api/v1/activity/get-activity`)
-            if (data.success) {
-                setActivities(data.activity);
+            if (response.data.success) {
+                setActivities(response.data.activity);
             }
+
         } catch (error) {
             console.log(error)
             toast.error('Something went wrong in getting Activities')
@@ -20,9 +34,7 @@ const ActivityLog = () => {
 
     }
 
-    useEffect(() => {
-        getAllActivities();
-    }, [])
+
 
     return (
         <>
@@ -32,12 +44,12 @@ const ActivityLog = () => {
                         <h1 className='display-6 fw-bolder text-center'>Activity Logs</h1>
                         <hr />
                         <div className="row justify-content-center">
-                            {activities.map(activity => (
+                            {activities.map((activity) => (
                                 <div class="card text-white bg-dark mx-3 my-3" style={{ width: '18rem' }}>
-                                    <div class="card-header">{activity.title}</div>
+                                    <div class="card-header" key={activity._id}>{activity.title}</div>
 
                                     <div class="card-body">
-                                        <h5 class="card-title" key={activity._id}>{activity.activity_type}</h5>
+                                        <h5 class="card-title">{activity.activity_type}</h5>
                                         <p class="card-text">{activity.description}</p>
                                         <p class="card-text">{activity.duration}</p>
                                         <p class="card-text">{activity.date}</p>

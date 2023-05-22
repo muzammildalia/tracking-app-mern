@@ -1,8 +1,8 @@
 import ActivityModel from "../models/ActivityModel.js";
-
+import userModel from "../models/userModel.js";
 export const createActivityController = async (req, res) => {
     try {
-        const { title, description, activity_type, duration, date } = req.body;
+        const { personId, title, description, activityType, duration, date } = req.body;
         if (!title) {
             return res.status(401).send({
                 message: "Title is required"
@@ -13,7 +13,7 @@ export const createActivityController = async (req, res) => {
                 message: "Discription is required"
             })
         }
-        if (!activity_type) {
+        if (!activityType) {
             return res.status(401).send({
                 message: "Activity Type is required"
             })
@@ -36,9 +36,10 @@ export const createActivityController = async (req, res) => {
             });
         }
         const activity = await new ActivityModel({
+            person: personId,
             title,
             description,
-            activity_type,
+            activity_type: activityType,
             duration,
             date
         }).save();
@@ -73,5 +74,36 @@ export const getActivityController = async (req, res) => {
             message: "cannot Get Activities",
             error
         })
+    }
+};
+
+export const getUserActivities = async (req, res) => {
+    const { userId } = req.params; // Assuming the user ID is passed as a route parameter
+
+    try {
+        const activities = await Activity.find({ person: userId }).exec();
+        res.status(200).send(activities);
+    } catch (error) {
+        res.status(500).send({ message: 'Failed to fetch user activities.' });
+    }
+};
+
+export const getactivitController = async (req, res) => {
+    try {
+        const activity = await ActivityModel
+            .find({ person: req.user._id })
+            .populate("person", "_id")
+        res.status(201).send({
+            success: true,
+            message: "user activities get sucessfully",
+            activity
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error WHile Geting Activities",
+            error,
+        });
     }
 };

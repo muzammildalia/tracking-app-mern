@@ -4,10 +4,15 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/layouts/Header";
+import { useAuth } from "../../context/auth";
+
 const Activity = () => {
+    const [auth] = useAuth();
+    const { userId } = auth; // Destructure the userId from the auth state object
+
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [activity_type, setactivity_type] = useState("");
+    const [activityType, setactivityType] = useState("");
     const [duration, setDuration] = useState();
     const [date, setDate] = useState();
 
@@ -16,14 +21,15 @@ const Activity = () => {
     const handlesubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.get(
+            const res = await axios.post(
                 `${process.env.REACT_APP_API}/api/v1/activity/create-activity`,
                 {
                     title,
                     description,
-                    activity_type,
+                    activityType,
                     duration,
-                    date
+                    date,
+                    userId, // Include the user ID in the request payload
                 }
             );
             if (res && res.data.success) {
@@ -34,7 +40,7 @@ const Activity = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went Wrong");
+            toast.error("Something went wrong");
         }
     };
 
@@ -78,8 +84,8 @@ const Activity = () => {
 
                                 <input
                                     type="text"
-                                    value={activity_type}
-                                    onChange={(e) => setactivity_type(e.target.value)}
+                                    value={activityType}
+                                    onChange={(e) => setactivityType(e.target.value)}
                                     placeholder="Define Activity Type"
                                     class="form-control"
                                     id="exampleInputPassword1"
