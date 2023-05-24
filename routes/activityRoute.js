@@ -23,6 +23,6 @@ router.post('/create-activity', requireSignIn, createActivityController)
 //     }
 // });
 
-router.get("/user-activities/:userId", requireSignIn, getUserActivitiesController);
+router.get("/user-activities/:userId", getUserActivitiesController);
 
 export default router;

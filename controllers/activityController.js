@@ -139,3 +139,32 @@ export const getUserActivitiesController = async (req, res) => {
         res.status(500).send({ message: 'Failed to fetch user activities.' });
     }
 };
+
+
+// new get activity
+
+// export const getUserActivitiesController = async (req, res) => {
+//     try {
+//         const userId = req.user._id;
+//         const activities = await ActivityModel.find({ person: userId });
+
+//         res.status(200).send({
+//             success: true,
+//             activities: activities.map(activity => ({
+//                 _id: activity._id,
+//                 title: activity.title,
+//                 description: activity.description,
+//                 activity_type: activity.activity_type,
+//                 duration: activity.duration,
+//                 date: activity.date,
+//             })),
+//         });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send({
+//             success: false,
+//             message: 'Error in retrieving activities',
+//             error
+//         });
+//     }
+// };

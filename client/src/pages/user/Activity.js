@@ -8,7 +8,7 @@ import { useAuth } from "../../context/auth";
 
 const Activity = () => {
     const [auth] = useAuth();
-    const { userId } = auth; // Destructure the userId from the auth state object
+    const { userId } = auth;
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -97,7 +97,7 @@ const Activity = () => {
 
                                 <input
                                     type="text"
-                                    step="2"
+
                                     value={duration}
                                     onChange={(e) => setDuration(e.target.value)}
                                     placeholder="Set Duration in format (DD/MM/YYYY)"

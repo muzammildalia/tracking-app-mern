@@ -5,36 +5,34 @@ import { useAuth } from "../context/auth";
 // import { Link, useNavigate } from "react-router-dom";
 
 const ActivityLog = () => {
-    const [activities, setActivities] = useState([]);
     const [auth] = useAuth();
-
-
+    const [activities, setActivities] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (auth.user) {
-            getAllActivities(auth.user.userId);
-        }
+        const fetchUserActivities = async () => {
+            try {
+                const userId = auth.user?._id;
+                if (!userId) {
+                    setLoading(false);
+                    return;
+                }
+
+                const response = await axios.get(`${process.env.REACT_APP_API}/api/v1/activity/user-activities/${userId}`)
+                setActivities(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching user activities:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchUserActivities();
     }, [auth]);
 
-
-
-
-    const getAllActivities = async (userId) => {
-        try {
-            const { data } = await axios.get(
-                `${process.env.REACT_APP_API}/api/v1/activity/get-activity`)
-            if (data.success) {
-                setActivities(data.activity);
-            }
-
-        } catch (error) {
-            console.log(error)
-            toast.error('Something went wrong in getting Activities')
-        }
-
+    if (loading) {
+        return <p>Loading...</p>;
     }
-
-
 
     return (
         <>
