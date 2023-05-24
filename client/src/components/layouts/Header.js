@@ -44,8 +44,8 @@ const Header = ({ isDark }) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/category" className="nav-link">
-                  Categories
+                <Link to="/about" className="nav-link">
+                  About
                 </Link>
               </li>
               {!auth.user ? (
