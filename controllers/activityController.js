@@ -1,5 +1,7 @@
 import ActivityModel from "../models/ActivityModel.js";
 import userModel from "../models/userModel.js";
+
+//CREATE activities
 export const createActivityController = async (req, res) => {
     try {
         const { title, description, activityType, duration, date } = req.body;
@@ -78,56 +80,7 @@ export const createActivityController = async (req, res) => {
     }
 };
 
-export const getActivityController = async (req, res) => {
-    try {
-        const activity = await ActivityModel.find({})
-        res.status(201).send({
-            success: true,
-            message: "Loading Activities Successfull",
-            activity
-        })
-    } catch (error) {
-        console.log(error)
-        res.status(500).send({
-            success: false,
-            message: "cannot Get Activities",
-            error
-        })
-    }
-};
-
-export const getUserActivities = async (req, res) => {
-    const { userId } = req.params; // Assuming the user ID is passed as a route parameter
-
-    try {
-        const activities = await Activity.find({ person: userId }).exec();
-        res.status(200).send(activities);
-    } catch (error) {
-        res.status(500).send({ message: 'Failed to fetch user activities.' });
-    }
-};
-
-export const getactivitController = async (req, res) => {
-    try {
-        const activity = await ActivityModel
-            .find({ person: req.user._id })
-            .populate("person", "_id")
-        res.status(201).send({
-            success: true,
-            message: "user activities get sucessfully",
-            activity
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({
-            success: false,
-            message: "Error WHile Geting Activities",
-            error,
-        });
-    }
-};
-
-
+//READ get activities
 
 export const getUserActivitiesController = async (req, res) => {
     const { userId } = req.params; // Assuming the user ID is passed as a route parameter
@@ -140,31 +93,101 @@ export const getUserActivitiesController = async (req, res) => {
     }
 };
 
+// export const updateActivity = async (req, res) => {
+//     const { activityId } = req.params;
+//     const { title, description, activityType, duration, date } = req.body;
 
-// new get activity
-
-// export const getUserActivitiesController = async (req, res) => {
 //     try {
-//         const userId = req.user._id;
-//         const activities = await ActivityModel.find({ person: userId });
+//         const existingActivity = await ActivityModel.findById(activityId);
+//         if (!existingActivity) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'Activity not found',
+//             });
+//         }
 
-//         res.status(200).send({
+//         existingActivity.title = title;
+//         existingActivity.description = description;
+//         existingActivity.activity_type = activityType;
+//         existingActivity.duration = duration;
+//         existingActivity.date = date;
+
+//         const updatedActivity = await existingActivity.save();
+
+//         res.status(200).json({
 //             success: true,
-//             activities: activities.map(activity => ({
-//                 _id: activity._id,
-//                 title: activity.title,
-//                 description: activity.description,
-//                 activity_type: activity.activity_type,
-//                 duration: activity.duration,
-//                 date: activity.date,
-//             })),
+//             message: 'Activity successfully updated',
+//             activity: updatedActivity,
 //         });
 //     } catch (error) {
-//         console.log(error);
-//         res.status(500).send({
+//         console.error('Error updating activity:', error);
+//         res.status(500).json({
 //             success: false,
-//             message: 'Error in retrieving activities',
-//             error
+//             message: 'Error updating activity',
+//             error,
 //         });
 //     }
 // };
+
+export const updateActivityController = async (req, res) => {
+    const { activityId } = req.params;
+    const { title, description, activityType, duration, date } = req.body;
+
+    try {
+        const existingActivity = await ActivityModel.findById(activityId);
+        if (!existingActivity) {
+            return res.status(404).json({
+                success: false,
+                message: "Activity not found",
+            });
+        }
+
+        existingActivity.title = title;
+        existingActivity.description = description;
+        existingActivity.activity_type = activityType;
+        existingActivity.duration = duration;
+        existingActivity.date = date;
+
+        const updatedActivity = await existingActivity.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Activity successfully updated",
+            activity: updatedActivity,
+        });
+    } catch (error) {
+        console.error("Error updating activity:", error);
+        res.status(500).json({
+            success: false,
+            message: "Error updating activity",
+            error,
+        });
+    }
+};
+
+export const deleteActivityController = async (req, res) => {
+
+    const { activityId } = req.params;
+
+    try {
+        const deletedActivity = await ActivityModel.findByIdAndDelete(activityId);
+        if (!deletedActivity) {
+            return res.status(404).json({
+                success: false,
+                message: "Activity not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Activity successfully deleted",
+            activity: deletedActivity,
+        });
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Error in deleting activity",
+            error
+        })
+    }
+};

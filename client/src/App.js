@@ -14,6 +14,7 @@ import PrivateRoute from './components/Routes/Private.js';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import Activity from './pages/user/Activity';
 import Profile from './pages/user/Profile';
+import UpdateActivity from './components/UpdateActivity';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/activity" element={<PrivateRoute />}>
           <Route path="" element={<Activity />} />
         </Route>
+        <Route path='/updateactivity' element={<UpdateActivity />} />
         <Route path="/profile" element={<PrivateRoute />}>
           <Route path="" element={<Profile />} />
         </Route>
