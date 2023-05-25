@@ -171,6 +171,7 @@ export const forgotPasswordController = async (req, res) => {
 export const updateProfileController = async (req, res) => {
     try {
         const { name, email, password, phone, address } = req.body;
+        
         const user = await userModel.findById(req.user._id)
         if (password && password.length < 6) {
             return res.status(400).send({

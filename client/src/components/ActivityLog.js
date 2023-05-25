@@ -15,10 +15,12 @@ const ActivityLog = () => {
     const [duration, setDuration] = useState("");
     const [date, setDate] = useState("");
     const [editActivityId, setEditActivityId] = useState(null);
+
     const navigate = useNavigate();
     const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
     const editActivityModalRef = useRef(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [edit, setEdit] = useState(null);
 
     useEffect(() => {
         const fetchUserActivities = async () => {
@@ -38,6 +40,7 @@ const ActivityLog = () => {
             }
         };
 
+
         fetchUserActivities();
     }, [auth]);
 
@@ -54,20 +57,25 @@ const ActivityLog = () => {
         }
     };
 
-    const handleUpdate = async () => {
+    const handleUpdate = async (editActivityId) => {
         try {
             const res = await axios.put(
-                `${process.env.REACT_APP_API}/api/v1/activity/${editActivityId}`,
+                `${process.env.REACT_APP_API}/api/v1/activity/update-activities/${editActivityId}`,
                 {
                     title,
                     description,
-                    activityType,
+                    activity_type: activityType,
                     duration,
                     date,
                     userId,
                 }
             );
             if (res && res.data.success) {
+                setActivities((prevActivities) =>
+                    prevActivities.map((activity) =>
+                        activity._id === editActivityId ? { ...activity, title, description, activity_type: activityType, duration, date } : activity
+                    )
+                );
                 setIsModalOpen(false);
                 toast.success(res.data.message);
                 navigate("/");
@@ -95,7 +103,9 @@ const ActivityLog = () => {
                 // Remove the deleted activity from the activities array
                 setActivities((prevActivities) =>
                     prevActivities.filter((activity) => activity._id !== deleteConfirmationId)
+
                 );
+                setDeleteConfirmationId(null);
             } else {
                 toast.error(res.data.message);
             }
@@ -134,15 +144,16 @@ const ActivityLog = () => {
                                         <button type="button" class="btn btn-light rounded-pill px-3 mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal1" onClick={() => handleEdit(activity._id)}>Edit</button>
                                         <button type="button" class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => handleDelete(activity._id)}>Delete</button>
 
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                        <div className={`modal fade ${isModalOpen ? 'show' : ''}`} id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">confirm delete</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        ...
+                                                    <div class="modal-body text-dark">
+
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -151,6 +162,7 @@ const ActivityLog = () => {
                                                 </div>
                                             </div>
                                         </div>
+
 
                                     </div>
                                 </div>
@@ -235,7 +247,7 @@ const ActivityLog = () => {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" onClick={handleUpdate}>Save changes</button>
+                                            <button type="button" class="btn btn-primary" onClick={() => handleUpdate(editActivityId)}>Save changes</button>
                                         </div>
                                     </div>
                                 </div>
