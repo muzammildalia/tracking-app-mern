@@ -38,7 +38,7 @@ const Activity = () => {
           activityType,
           duration,
           date,
-          userId, // Include the user ID in the request payload
+          userId
         }
       );
       if (res && res.data.success) {
@@ -98,44 +98,44 @@ const Activity = () => {
                     onChange={(e) => setactivityType(e.target.value)}
                     placeholder="Define Activity Type"
                     className="form-select"
-                    // className="form-control"
                     required
                   >
                     <option value="">Select Activity</option>
-                    <option value="run">Running</option>
-                    <option value="bicycle">Bicycle</option>
-                    <option value="ride">Ride</option>
-                    <option value="swim">Swim</option>
-                    <option value="walk">Walk</option>
-                    <option value="hike">Hike</option>
+                    <option value="Running">Running</option>
+                    <option value="Bicycle">Bicycle</option>
+                    <option value="Ride">Ride</option>
+                    <option value="Swim">Swim</option>
+                    <option value="Walk">Walk</option>
+                    <option value="Hike">Hike</option>
                   </select>
                 </div>
-               
+
               </div>
-     
-                <div className="mb-2">
-      <label htmlFor="time">Duration</label>
-      <div className="input-group">
-        <input
-          type="number"
-          value={duration}
-          onChange={handleDurationChange}
-          placeholder="Set Duration"
-          className="form-control"
-          id="exampleInputPassword1"
-          required
-        />
-        <select
-          className="form-select"
-          value={durationUnit}
-          onChange={handleDurationUnitChange}
-        >
-          <option value="seconds">Seconds</option>
-          <option value="minutes">Minutes</option>
-          <option value="hours">Hours</option>
-        </select>
-      </div>
-    </div>
+
+              <div className="mb-2">
+                <label htmlFor="time">Duration</label>
+                <div className="input-group">
+                  <input
+                    type="number"
+                    value={duration}
+                    onChange={handleDurationChange}
+                    placeholder="Set Duration"
+                    className="form-control"
+                    id="exampleInputPassword1"
+                    required
+                  />
+                  <select
+                    type="text"
+                    className="form-select"
+                    value={durationUnit}
+                    onChange={handleDurationUnitChange}
+                  >
+                    <option value="Seconds">Seconds</option>
+                    <option value="Minutes">Minutes</option>
+                    <option value="Hours">Hours</option>
+                  </select>
+                </div>
+              </div>
 
               <div class="mb-2">
                 <label htmlFor="date">Date</label>

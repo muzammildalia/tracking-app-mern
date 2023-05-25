@@ -131,10 +131,10 @@ export const getUserActivitiesController = async (req, res) => {
 
 export const updateActivityController = async (req, res) => {
     const { activityId } = req.params;
-    const { title, description, activityType, duration, date } = req.body;
-
+    const { title, description, activity_type, duration, date } = req.body;
     try {
         const existingActivity = await ActivityModel.findById(activityId);
+
         if (!existingActivity) {
             return res.status(404).json({
                 success: false,
@@ -142,13 +142,17 @@ export const updateActivityController = async (req, res) => {
             });
         }
 
-        existingActivity.title = title;
-        existingActivity.description = description;
-        existingActivity.activity_type = activityType;
-        existingActivity.duration = duration;
-        existingActivity.date = date;
-
-        const updatedActivity = await existingActivity.save();
+        const updatedActivity = await ActivityModel.findByIdAndUpdate(
+            activityId,
+            {
+                title: title || existingActivity.title,
+                description: description || existingActivity.description,
+                activity_type: activity_type || existingActivity.activity_type,
+                duration: duration || existingActivity.duration,
+                date: date || existingActivity.date,
+            },
+            { new: true }
+        );
 
         res.status(200).json({
             success: true,
@@ -156,7 +160,7 @@ export const updateActivityController = async (req, res) => {
             activity: updatedActivity,
         });
     } catch (error) {
-        console.error("Error updating activity:", error);
+        console.error(error);
         res.status(500).json({
             success: false,
             message: "Error updating activity",

@@ -12,7 +12,7 @@ router.post('/create-activity', requireSignIn, createActivityController);
 
 router.get("/user-activities/:userId", getUserActivitiesController);
 
-router.put('/activities/:activityId', updateActivityController);
+router.put('/update-activities/:activityId', requireSignIn, updateActivityController);
 
 router.delete('/remove-activities/:activityId', deleteActivityController)
 

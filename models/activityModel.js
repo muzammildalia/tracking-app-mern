@@ -13,18 +13,22 @@ const activitySchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
+        unique: false
     },
     activity_type: {
         type: String,
         required: true,
+        unique: false
     },
     duration: {
         type: String,
         required: true,
+        unique: false
     },
     date: {
         type: Date,
         required: true,
+        unique: false
     },
     slug: {
         type: String,
