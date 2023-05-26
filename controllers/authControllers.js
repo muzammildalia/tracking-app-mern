@@ -7,7 +7,7 @@ export const registerController = async (req, res) => {
         const { name, email, password, phone, address, answer } = req.body;
         //validations
         if (!name) {
-            return res.send({ message: "Name is Required" });
+            return res.send({ error: "Name is Required" });
         }
         if (!email) {
             return res.send({ message: "Email is Required" });
@@ -43,7 +43,6 @@ export const registerController = async (req, res) => {
             address,
             password: hashedPassword,
             answer,
-            role,
         }).save();
 
         res.status(201).send({
@@ -171,7 +170,7 @@ export const forgotPasswordController = async (req, res) => {
 export const updateProfileController = async (req, res) => {
     try {
         const { name, email, password, phone, address } = req.body;
-        
+
         const user = await userModel.findById(req.user._id)
         if (password && password.length < 6) {
             return res.status(400).send({
