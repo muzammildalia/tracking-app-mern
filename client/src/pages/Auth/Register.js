@@ -14,6 +14,34 @@ const Register = () => {
   const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
 
+  const handleNameChange = (e) => {
+    const inputValue = e.target.value;
+    // Remove any spaces from the input value
+    const trimmedValue = inputValue.replace(/\s/g, "");
+    setName(trimmedValue);
+  };
+
+  const handleAddressChange = (e) => {
+    const inputValue = e.target.value;
+    // Remove any spaces from the input value
+    const trimmedValue = inputValue.replace(/\s/g, "");
+    setAddress(trimmedValue);
+  };
+
+  const handlePhoneChange = (e) => {
+    const inputValue = e.target.value;
+
+    const numericValue = inputValue.replace(/\D/g, "");
+    setPhone(numericValue);
+  };
+
+  const handleAnswerChange = (e) => {
+    const inputValue = e.target.value;
+    // Remove any spaces from the input value
+    const trimmedValue = inputValue.replace(/\s/g, "");
+    setAnswer(trimmedValue);
+  };
+
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
@@ -35,12 +63,8 @@ const Register = () => {
   return (
     <Layout>
       <Header />
-      {/* <div className='register'> */}
-      {/* <div className="container"> */}
       <div className="signup template d-flex justify-content-center align-items-center pt-3 pb-5 vh-70 bg-dark bg-gradient">
         <div className="form_container 50-w p-5 rounded bg-white">
-          {/* <div className="form_container p-3 rounded bg-white"> */}
-          {/* <h1> Register Page </h1> */}
           <form onSubmit={handlesubmit}>
             <h3 className="text-center"> Register Page </h3>
             <label htmlFor="name">Name</label>
@@ -48,8 +72,9 @@ const Register = () => {
               <input
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter Name"
+                onChange={handleNameChange}
+                pattern="[A-Za-z]+"
+                placeholder="Enter Name (A-Z / a-z only)"
                 class="form-control"
                 id="exampleInputPassword1"
                 required
@@ -65,6 +90,7 @@ const Register = () => {
                 placeholder="Email"
                 class="form-control"
                 id="exampleInputEmail1"
+                pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
                 aria-describedby="emailHelp"
                 required
               />
@@ -76,6 +102,8 @@ const Register = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setpassword(e.target.value)}
+                maxlength="22"
+                minLength="6"
                 placeholder="password"
                 class="form-control"
                 id="exampleInputPassword1"
@@ -86,9 +114,10 @@ const Register = () => {
               <label htmlFor="phone">Phone</label>
 
               <input
-                type="text"
+                type="tel"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={handlePhoneChange}
+                maxlength="11"
                 placeholder="phone No."
                 class="form-control"
                 id="exampleInputPassword1"
@@ -100,7 +129,8 @@ const Register = () => {
               <input
                 type="text"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={handleAddressChange}
+                maxLength="30"
                 placeholder="Address"
                 class="form-control"
                 id="exampleInputPassword1"
@@ -130,7 +160,8 @@ const Register = () => {
               <input
                 type="text"
                 value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
+                onChange={handleAnswerChange}
+                maxlength="15"
                 placeholder="Answer"
                 class="form-control"
                 id="exampleInputPassword1"
