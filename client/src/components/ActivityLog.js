@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 import { formatDuration } from "./utils";
 import { FaClock, FaCalendarAlt } from "react-icons/fa";
+
+
 const ActivityLog = () => {
   const [auth] = useAuth();
   const { userId } = auth;
@@ -17,12 +19,14 @@ const ActivityLog = () => {
   const [durationUnit, setDurationUnit] = useState("");
   const [date, setDate] = useState("");
   const [editActivityId, setEditActivityId] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   const navigate = useNavigate();
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
-  const editActivityModalRef = useRef(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [edit, setEdit] = useState(null);
+
+
+
 
   useEffect(() => {
     const fetchUserActivities = async () => {
@@ -47,6 +51,38 @@ const ActivityLog = () => {
     fetchUserActivities();
   }, [auth]);
 
+  const handleTitleChange = (e) => {
+    const inputValue = e.target.value;
+    // Remove any spaces from the input value
+    const trimmedValue = inputValue.replace(/\s/g, "");
+    setTitle(trimmedValue);
+  };
+
+  const handleDescChange = (e) => {
+    const inputValue = e.target.value;
+    // Remove any spaces from the input value
+    const trimmedValue = inputValue.replace(/\s/g, "");
+    setDescription(trimmedValue);
+  };
+
+  const handleDurationChange = (e) => {
+    const inputDuration = parseInt(e.target.value);
+
+    if (e.target.value === '') {
+      setDuration(e.target.value);
+      setErrorMessage("");
+    } else if (
+      Number.isNaN(inputDuration) ||
+      inputDuration < 0 ||
+      inputDuration > 24
+    ) {
+      setErrorMessage("Please enter a valid duration between 0 and 24 hours");
+    } else {
+      setDuration(e.target.value);
+      setErrorMessage("");
+    }
+  };
+
   const handleEdit = (activityId) => {
     const activity = activities.find((activity) => activity._id === activityId);
     if (activity) {
@@ -57,7 +93,6 @@ const ActivityLog = () => {
       setDurationUnit(activities.durationUnit);
       setDate(activity.date);
       setEditActivityId(activityId);
-      setIsModalOpen(true);
     }
   };
 
@@ -80,18 +115,17 @@ const ActivityLog = () => {
           prevActivities.map((activity) =>
             activity._id === editActivityId
               ? {
-                  ...activity,
-                  title,
-                  description,
-                  activity_type: activityType,
-                  duration,
-                  durationUnit,
-                  date,
-                }
+                ...activity,
+                title,
+                description,
+                activity_type: activityType,
+                duration,
+                durationUnit,
+                date,
+              }
               : activity
           )
         );
-        setIsModalOpen(false);
         toast.success(res.data.message);
         navigate("/");
       } else {
@@ -115,13 +149,11 @@ const ActivityLog = () => {
         toast.success(res.data.message);
 
         navigate("/");
-        // Remove the deleted activity from the activities array
         setActivities((prevActivities) =>
           prevActivities.filter(
             (activity) => activity._id !== deleteConfirmationId
           )
         );
-        // setDeleteConfirmationId(null);
       } else {
         toast.error(res.data.message);
       }
@@ -131,10 +163,6 @@ const ActivityLog = () => {
     }
     setDeleteConfirmationId(null);
   };
-
-  //   const closeModal = () => {
-  //     setDeleteConfirmationId(null);
-  //   };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -167,14 +195,6 @@ const ActivityLog = () => {
                         {formatDuration(activity.duration)}
                       </p>
                     </div>
-                    {/* <p class="card-text">
-                      <FaClock className="me-2 mb-1" />
-                      {activity.duration}
-                    </p> */}
-                    {/* <p class="card-text">
-                      {`${activity.duration}
-                       ${activity.durationUnit}`}
-                    </p> */}
                     <div className="d-flex justify-content-end mb-2">
                       <p class="card-text">
                         <FaCalendarAlt className="me-2 mb-1" />
@@ -277,7 +297,7 @@ const ActivityLog = () => {
                           <input
                             type="text"
                             value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            onChange={handleTitleChange}
                             placeholder="Activity Title"
                             class="form-control"
                             required
@@ -289,7 +309,7 @@ const ActivityLog = () => {
                           <input
                             type="text"
                             value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            onChange={handleDescChange}
                             placeholder="Description"
                             class="form-control"
                             id="exampleInputEmail1"
@@ -316,13 +336,16 @@ const ActivityLog = () => {
                           <input
                             type="text"
                             value={duration}
-                            onChange={(e) => setDuration(e.target.value)}
-                            placeholder="Set Duration in format (DD/MM/YYYY)"
+                            onChange={handleDurationChange}
+                            placeholder="Set Duration under 24 hours"
                             class="form-control"
                             id="exampleInputPassword1"
                             required
                           />
                         </div>
+                        {errorMessage && (
+                          <div className="text-danger">{errorMessage}</div>
+                        )}
                         <div class="mb-2">
                           <label htmlFor="date">Date</label>
                           <input
