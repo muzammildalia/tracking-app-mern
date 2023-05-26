@@ -7,10 +7,8 @@ Database -> Mongodb Database -> NoSql Database Server -> Express Server Modules 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
-sss
+## Project Title:
+Exercise Tracking Application using MERN Stack.
 ### `npm start`
 
 Runs the app in the development mode.\
