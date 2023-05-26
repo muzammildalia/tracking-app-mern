@@ -1,3 +1,8 @@
+I'have create an exercise tracker application with using the following frameworks:
+
+Database -> Mongodb Database -> NoSql Database Server -> Express Server Modules -> NodeJS Modules React -> React Components using some following Hooks: a. useContext() -> React Component with context b. useEffect() -> React Component with Effect Design created using wire frame then implement on the html css bootstrap
+
+
 # Getting Started with Create React Apps
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
