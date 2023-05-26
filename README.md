@@ -7,9 +7,11 @@ Database -> Mongodb Database -> NoSql Database Server -> Express Server Modules 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Project Title:
+# Project Title:
 Exercise Tracking Application using MERN Stack.
-### `npm start`
+# Project Demo
+## 1. Home Page
+![1](https://github.com/muzammildalia/tracking-app-mern/assets/69090543/954e0239-dae8-4a9e-ac19-5105615e84d7)
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
