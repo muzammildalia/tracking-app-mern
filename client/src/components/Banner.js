@@ -1,5 +1,6 @@
 import React from "react";
 import bg from "../Assets/img_23.jpg";
+import bgMobile from "../Assets/img_res.jpg";
 import styled from "styled-components";
 
 import WithBarTitle from "../components/reusable/WithBarTitle";
@@ -21,7 +22,9 @@ const Banner = () => {
             <h2 className="Build">
               Build Perfect body shape for good and healthy life.
             </h2>
-            <Link to="/activity"><Button animation="fadeInLeft">Track Your Fitness</Button></Link>
+            <Link to="/activity">
+              <Button animation="fadeInLeft">Track Your Fitness</Button>
+            </Link>
           </RightBox>
           <LeftBox></LeftBox>
         </Container>
@@ -30,26 +33,51 @@ const Banner = () => {
   );
 };
 
+//new
 const Main = styled.div`
   width: 100%;
   height: 100vh;
-  background-image: url(${bg});
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
   position: relative;
   overflow: hidden;
-  @media only screen and (max-width: 768px) {
-    height: auto;
-    background-attachment: scroll;
-    background-size: auto;
+
+  @media (min-width: 768px) {
+    background-image: url(${bg});
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  @media (max-width: 767px) {
+    background-image: url(${bgMobile});
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 `;
+//end
+//old
+// const Main = styled.div`
+//   width: 100%;
+//   height: 100vh;
+//   background-image: url(${bg});
+//   background-attachment: fixed;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   position: relative;
+//   overflow: hidden;
+//   @media only screen and (max-width: 768px) {
+//     height: auto;
+//     background-attachment: scroll;
+//     background-size: auto;
+//   }
+// `;
 // @media only screen and (max-width: 480px) {
 //   height: auto;
 //   width: 100%;
 //   background-attachment: scroll;
 // }
+// end
+
 const Container = styled.div`
   width: 100%;
   height: 90%;
