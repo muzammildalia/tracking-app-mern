@@ -1,33 +1,82 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/layouts/Layout";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./style.css";
 import Header from "../../components/layouts/Header";
+import { useAuth } from "../../context/auth";
+
 const Register = () => {
   const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [errorAdddress, setErrorAddress] = useState("");
   const [answer, setAnswer] = useState("");
+
   const navigate = useNavigate();
+  const [auth] = useAuth();
+
+  // useEffect(() => {
+  //   // Redirect to another page if the user is already authenticated
+  //   if (auth.user) {
+  //     navigate("/");
+  //   }
+  // }, [auth.user, navigate]);
+
+  // const history = useHistory();
+
+  // Redirect to another page if the user is already authenticated
+  if (auth.user) {
+    navigate("/");
+    return null;
+  }
+
+  // const location = useLocation();
+
+  // const navigate = useNavigate();
+
+  // const handleNameChange = (e) => {
+  //   const inputValue = e.target.value;
+  //   // Remove any spaces from the input value
+  //   const trimmedValue = inputValue.replace(/\s/g, "");
+  //   setName(trimmedValue);
+  // };
+
+  // const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     const inputValue = e.target.value;
-    // Remove any spaces from the input value
-    const trimmedValue = inputValue.replace(/\s/g, "");
-    setName(trimmedValue);
+
+    // Check if the input value contains only spaces or special characters
+    if (/^\s*$/.test(inputValue) || /[^a-zA-Z\s]/.test(inputValue)) {
+      // Input value contains only spaces or special characters, handle the error here
+      setErrorMessage("Please enter a valid name");
+    } else {
+      setErrorMessage("");
+    }
+    setName(inputValue);
   };
 
   const handleAddressChange = (e) => {
     const inputValue = e.target.value;
-    // Remove any spaces from the input value
-    const trimmedValue = inputValue.replace(/\s/g, "");
-    setAddress(trimmedValue);
+    // Check if the input value contains only spaces or special characters
+    if (/^\s*$/.test(inputValue) || /[^a-zA-Z\s]/.test(inputValue)) {
+      // Input value contains only spaces or special characters, handle the error here
+      setErrorAddress("Please enter a valid Address");
+    } else {
+      setErrorAddress("");
+    }
+    setAddress(inputValue);
   };
 
+  // setAddress(inputValue);
+  // Remove any spaces from the input value
+  // const trimmedValue = inputValue.replace(/\s/g, "");
+  // setAddress(trimmedValue);
   const handlePhoneChange = (e) => {
     const inputValue = e.target.value;
 
@@ -44,6 +93,19 @@ const Register = () => {
 
   const handlesubmit = async (e) => {
     e.preventDefault();
+    // let nameError = "";
+    // let addressError = "";
+    // Check if the name is empty or contains only spaces
+    if (/^\s*$/.test(name)) {
+      setErrorMessage("Please enter a valid name");
+      return;
+    }
+    if (/^\s*$/.test(address)) {
+      setErrorAddress("Please enter a valid Address");
+      return;
+    }
+    // setErrorMessage();
+    // setErrorAddress();
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/auth/register`,
@@ -60,25 +122,47 @@ const Register = () => {
       toast.error("Something went Wrong");
     }
   };
+
+  // if (localStorage.getItem("auth")) {
+  //   return navigate("/");
+  // }
+
   return (
     <Layout>
       <Header />
-      <div className="signup template d-flex justify-content-center align-items-center pt-3 pb-5 vh-70 bg-dark bg-gradient">
+      {/* <div className="signup template d-flex justify-content-center align-items-center pt-3 pb-5 vh-70 bg-dark bg-gradient"> */}
+      <div
+        className="signup template d-flex justify-content-center align-items-center pt-3 pb-5 vh-70 "
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(33, 47, 61, 1) 35%, rgba(0, 212, 255, 1) 100%)",
+        }}
+      >
         <div className="form_container 50-w p-5 rounded bg-white">
           <form onSubmit={handlesubmit}>
-            <h3 className="text-center"> Register Page </h3>
+            {/* <h3 className="text-center"> Register Page </h3> */}
+            <h3
+              style={{
+                color: "rgba(0, 123, 255, 1)",
+              }}
+              className="text-center"
+            >
+              Register Page
+            </h3>
             <label htmlFor="name">Name</label>
             <div class="mb-2">
               <input
                 type="text"
                 value={name}
                 onChange={handleNameChange}
-                pattern="[A-Za-z]+"
+                pattern="^[A-Za-z\s]+$"
+                // pattern="[A-Za-z]+"
                 placeholder="Enter Name (A-Z / a-z only)"
                 class="form-control"
                 id="exampleInputPassword1"
                 required
               />
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
             <div class="mb-2">
               <label htmlFor="email">Email</label>
@@ -136,6 +220,9 @@ const Register = () => {
                 id="exampleInputPassword1"
                 required
               />
+              {errorAdddress && (
+                <p className="error-message">{errorAdddress}</p>
+              )}
             </div>
             <div class="mb-2">
               <label htmlFor="option">Select any Option Given Below</label>

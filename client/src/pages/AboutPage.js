@@ -2,7 +2,6 @@ import React from "react";
 import Layout from "../components/layouts/Layout";
 import Header from "../components/layouts/Header";
 
-
 const AboutPage = () => {
   return (
     <>
@@ -13,9 +12,9 @@ const AboutPage = () => {
           <div className="col-md-5">
             <img
               className="aboutimg"
-              src="/images/img_22.jpg"
+              src="/images/about2.jpeg"
               alt="contactus"
-              style={{ width: "100%" }}
+              style={{ width: "100%", marginLeft: "10%" }}
             />
           </div>
           <div className="col-md-6 d-flex align-items-center justify-content-end ">

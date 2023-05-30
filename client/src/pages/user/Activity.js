@@ -18,14 +18,22 @@ const Activity = () => {
 
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [errorActiviy, setErrorActivity] = useState("");
 
   const handleTitleChange = (e) => {
     const inputValue = e.target.value;
-    // Remove any spaces from the input value
-    const trimmedValue = inputValue.replace(/\s/g, "");
-    setTitle(trimmedValue);
+    // Check if the input value contains only spaces or special characters
+    if (/^\s*$/.test(inputValue) || /[^a-zA-Z\s]/.test(inputValue)) {
+      // Input value contains only spaces or special characters, handle the error here
+      setErrorActivity("Please enter a Valid Activity");
+    } else {
+      setErrorActivity("");
+    }
+    setTitle(inputValue);
   };
-
+  // Remove any spaces from the input value
+  // const trimmedValue = inputValue.replace(/\s/g, "");
+  // setTitle(trimmedValue);
   const handleDescChange = (e) => {
     const inputValue = e.target.value;
     // Remove any spaces from the input value
@@ -33,26 +41,43 @@ const Activity = () => {
     setDescription(trimmedValue);
   };
 
+  // const handleDurationChange = (e) => {
+  //   const inputDuration = parseInt(e.target.value);
+  //   if (e.target.value === "") {
+  //     setDuration(e.target.value);
+  //     setErrorMessage("");
+  //   } else if (
+  //     Number.isNaN(inputDuration) ||
+  //     inputDuration < 0 ||
+  //     inputDuration > 24
+  //   ) {
+  //     setErrorMessage("Enter a valid duration between 0 and 24 hours");
+  //   } else {
+  //     setDuration(e.target.value);
+  //     setErrorMessage("");
+  //   }
+  // };
+
   const handleDurationChange = (e) => {
-    const inputDuration = parseInt(e.target.value);
-    if (e.target.value === '') {
-      setDuration(e.target.value);
+    const inputValue = e.target.value;
+
+    if (inputValue === "") {
+      setDuration("");
       setErrorMessage("");
-    } else if (
-      Number.isNaN(inputDuration) ||
-      inputDuration < 0 ||
-      inputDuration > 24
-    ) {
-      setErrorMessage("Please enter a valid duration between 0 and 24 hours");
+    } else if (/^\d+$/.test(inputValue) && inputValue > 0 && inputValue <= 24) {
+      setDuration(inputValue);
+      setErrorMessage("");
     } else {
-      setDuration(e.target.value);
-      setErrorMessage("");
+      setErrorMessage("Enter a valid duration between 1 and 24 hours");
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (/^\s*$/.test(title)) {
+      setErrorActivity("Please enter a valid Address");
+      return;
+    }
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/activity/create-activity`,
@@ -81,10 +106,25 @@ const Activity = () => {
     <div>
       <Layout>
         <Header />
-        <div className="signup template d-flex justify-content-center align-items-center pt-3 pb-5 vh-70 bg-dark bg-gradient">
+        {/* <div className="signup template d-flex justify-content-center align-items-center pt-3 pb-5 vh-70 bg-dark bg-gradient"> */}
+
+        <div
+          className="login template d-flex justify-content-center align-items-center vh-100  "
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(33, 47, 61, 1) 35%, rgba(0, 212, 255, 1) 100%)",
+          }}
+        >
           <div className="form_container 50-w p-5 rounded bg-white">
             <form onSubmit={handleSubmit}>
-              <h3 className="text-center">Activity Page</h3>
+              <h3
+                className="text-center"
+                style={{
+                  color: "rgba(0, 123, 255, 1)",
+                }}
+              >
+                Activity Page
+              </h3>
               <label htmlFor="name">Title</label>
               <div className="mb-2">
                 <input
@@ -96,12 +136,15 @@ const Activity = () => {
                   className="form-control"
                   required
                 />
+                {errorActiviy && (
+                  <p className="error-message">{errorActiviy}</p>
+                )}
               </div>
               <div className="mb-2">
                 <label htmlFor="des">Description</label>
                 <input
                   type="text"
-                  maxLength={20}
+                  maxLength={15}
                   value={description}
                   onChange={handleDescChange}
                   placeholder="Description"
@@ -122,12 +165,12 @@ const Activity = () => {
                     required
                   >
                     <option value="">Select Activity</option>
-                    <option value="Running">Running</option>
-                    <option value="Bicycle">Bicycle</option>
-                    <option value="Ride">Ride</option>
-                    <option value="Swim">Swim</option>
-                    <option value="Walk">Walk</option>
-                    <option value="Hike">Hike</option>
+                    <option value="Running">Running 🏃</option>
+                    <option value="Bicycle">Bicycle 🚲</option>
+                    <option value="Ride">Ride 🚴</option>
+                    <option value="Swim">Swim 🏊‍♀️</option>
+                    <option value="Walk">Walk 🚶</option>
+                    <option value="Hike">Hike 🥾</option>
                   </select>
                 </div>
               </div>
@@ -145,7 +188,7 @@ const Activity = () => {
                   />
                 </div>
                 {errorMessage && (
-                  <div className="text-danger">{errorMessage}</div>
+                  <div className="error-message">{errorMessage}</div>
                 )}
               </div>
               <div className="mb-2">
@@ -153,6 +196,7 @@ const Activity = () => {
                 <input
                   type="date"
                   value={date}
+                  min={new Date().toISOString().split("T")[0]} // Set the min attribute to the current date
                   onChange={(e) => setDate(e.target.value)}
                   placeholder="Select Date"
                   className="form-control"

@@ -5,7 +5,7 @@ import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 import { formatDuration } from "./utils";
 import { FaClock, FaCalendarAlt } from "react-icons/fa";
-
+import Swal from "sweetalert2";
 
 const ActivityLog = () => {
   const [auth] = useAuth();
@@ -20,13 +20,12 @@ const ActivityLog = () => {
   const [date, setDate] = useState("");
   const [editActivityId, setEditActivityId] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [errorActiviy, setErrorActivity] = useState("");
 
   const navigate = useNavigate();
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
 
-
-
+  // const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchUserActivities = async () => {
@@ -53,9 +52,14 @@ const ActivityLog = () => {
 
   const handleTitleChange = (e) => {
     const inputValue = e.target.value;
-    // Remove any spaces from the input value
-    const trimmedValue = inputValue.replace(/\s/g, "");
-    setTitle(trimmedValue);
+    // Check if the input value contains only spaces or special characters
+    if (/^\s*$/.test(inputValue) || /[^a-zA-Z\s]/.test(inputValue)) {
+      // Input value contains only spaces or special characters, handle the error here
+      setErrorActivity("Please enter a Valid Activity");
+    } else {
+      setErrorActivity("");
+    }
+    setTitle(inputValue);
   };
 
   const handleDescChange = (e) => {
@@ -66,20 +70,16 @@ const ActivityLog = () => {
   };
 
   const handleDurationChange = (e) => {
-    const inputDuration = parseInt(e.target.value);
+    const inputValue = e.target.value;
 
-    if (e.target.value === '') {
-      setDuration(e.target.value);
+    if (inputValue === "") {
+      setDuration("");
       setErrorMessage("");
-    } else if (
-      Number.isNaN(inputDuration) ||
-      inputDuration < 0 ||
-      inputDuration > 24
-    ) {
-      setErrorMessage("Please enter a valid duration between 0 and 24 hours");
+    } else if (/^\d+$/.test(inputValue) && inputValue > 0 && inputValue <= 24) {
+      setDuration(inputValue);
+      setErrorMessage("");
     } else {
-      setDuration(e.target.value);
-      setErrorMessage("");
+      setErrorMessage("Enter a valid duration between 1 and 24 hours");
     }
   };
 
@@ -115,18 +115,19 @@ const ActivityLog = () => {
           prevActivities.map((activity) =>
             activity._id === editActivityId
               ? {
-                ...activity,
-                title,
-                description,
-                activity_type: activityType,
-                duration,
-                durationUnit,
-                date,
-              }
+                  ...activity,
+                  title,
+                  description,
+                  activity_type: activityType,
+                  duration,
+                  durationUnit,
+                  date,
+                }
               : activity
           )
         );
         toast.success(res.data.message);
+
         navigate("/");
       } else {
         toast.error(res.data.message);
@@ -140,29 +141,81 @@ const ActivityLog = () => {
   const handleDelete = async (activityId) => {
     setDeleteConfirmationId(activityId);
   };
+
+  // const handleDelete = async (activityId) => {
+  //   Swal.fire({
+  //     title: "Confirm Delete",
+  //     text: "Are you sure you want to delete this activity?",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Yes, delete it!",
+  //     cancelButtonText: "No, cancel",
+  //     reverseButtons: true,
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       // User clicked "Delete"
+  //       await confirmDelete(activityId);
+  //     }
+  //   });
+  // };
+
+  //new
   const confirmDelete = async (activityId) => {
     try {
-      const res = await axios.delete(
-        `${process.env.REACT_APP_API}/api/v1/activity/remove-activities/${activityId}`
-      );
-      if (res && res.data.success) {
-        toast.success(res.data.message);
+      const result = await Swal.fire({
+        title: "Confirm Delete",
+        text: "Are you sure you want to delete this activity?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel",
+        reverseButtons: true,
+      });
 
-        navigate("/");
-        setActivities((prevActivities) =>
-          prevActivities.filter(
-            (activity) => activity._id !== deleteConfirmationId
-          )
+      if (result.isConfirmed) {
+        const res = await axios.delete(
+          `${process.env.REACT_APP_API}/api/v1/activity/remove-activities/${activityId}`
         );
-      } else {
-        toast.error(res.data.message);
+
+        if (res && res.data.success) {
+          toast.success(res.data.message);
+
+          navigate("/");
+          setActivities((prevActivities) =>
+            prevActivities.filter((activity) => activity._id !== activityId)
+          );
+        } else {
+          toast.error(res.data.message);
+        }
       }
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong");
     }
-    setDeleteConfirmationId(null);
   };
+
+  //end
+
+  // const confirmDelete = async (activityId) => {
+  //   try {
+  //     const res = await axios.delete(
+  //       `${process.env.REACT_APP_API}/api/v1/activity/remove-activities/${activityId}`
+  //     );
+  //     if (res && res.data.success) {
+  //       toast.success(res.data.message);
+
+  //       navigate("/");
+  //       setActivities((prevActivities) =>
+  //         prevActivities.filter((activity) => activity._id !== activityId)
+  //       );
+  //     } else {
+  //       toast.error(res.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error("Something went wrong");
+  //   }
+  // };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -214,14 +267,15 @@ const ActivityLog = () => {
                       <button
                         type="button"
                         class="btn btn-light rounded-pill mx-1 my-1 delete-button"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                        onClick={() => handleDelete(activity._id)}
+                        // data-bs-toggle="modal"
+                        // data-bs-target="#exampleModal"
+                        onClick={() => confirmDelete(activity._id)}
+                        // onClick={() => handleDelete(activity._id)}
                       >
                         <i class="fas fa-trash-alt"></i> Delete
                       </button>
                     </div>
-                    <div
+                    {/* <div
                       class="modal fade"
                       id="exampleModal"
                       tabindex="-1"
@@ -256,6 +310,8 @@ const ActivityLog = () => {
                             <button
                               type="button"
                               class="btn btn-primary"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
                               onClick={() => confirmDelete(activity._id)}
                             >
                               Delete
@@ -263,7 +319,7 @@ const ActivityLog = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   {/* end */}
                 </div>
@@ -298,10 +354,14 @@ const ActivityLog = () => {
                             type="text"
                             value={title}
                             onChange={handleTitleChange}
+                            maxLength={15}
                             placeholder="Activity Title"
                             class="form-control"
                             required
                           />
+                          {errorActiviy && (
+                            <div className="text-danger">{errorActiviy}</div>
+                          )}
                         </div>
                         <div class="mb-2">
                           <label htmlFor="des">Description</label>
@@ -310,6 +370,7 @@ const ActivityLog = () => {
                             type="text"
                             value={description}
                             onChange={handleDescChange}
+                            maxLength={15}
                             placeholder="Description"
                             class="form-control"
                             id="exampleInputEmail1"
@@ -320,7 +381,25 @@ const ActivityLog = () => {
                         <div class="mb-2">
                           <label htmlFor="Activity-Type">Activity Type</label>
 
-                          <input
+                          <div className="input-group">
+                            <select
+                              value={activityType}
+                              onChange={(e) => setactivityType(e.target.value)}
+                              placeholder="Define Activity Type"
+                              className="form-select"
+                              required
+                            >
+                              <option value="">Select Activity</option>
+                              <option value="Running">Running 🏃</option>
+                              <option value="Bicycle">Bicycle 🚲</option>
+                              <option value="Ride">Ride 🚴</option>
+                              <option value="Swim">Swim 🏊‍♀️</option>
+                              <option value="Walk">Walk 🚶</option>
+                              <option value="Hike">Hike 🥾</option>
+                            </select>
+                          </div>
+
+                          {/* <input
                             type="text"
                             value={activityType}
                             onChange={(e) => setactivityType(e.target.value)}
@@ -328,7 +407,7 @@ const ActivityLog = () => {
                             class="form-control"
                             id="exampleInputPassword1"
                             required
-                          />
+                          /> */}
                         </div>
                         <div class="mb-2">
                           <label htmlFor="time">Duration</label>
@@ -337,20 +416,21 @@ const ActivityLog = () => {
                             type="text"
                             value={duration}
                             onChange={handleDurationChange}
-                            placeholder="Set Duration under 24 hours"
+                            placeholder="Set Duration"
                             class="form-control"
                             id="exampleInputPassword1"
                             required
                           />
                         </div>
                         {errorMessage && (
-                          <div className="text-danger">{errorMessage}</div>
+                          <div className="error-message">{errorMessage}</div>
                         )}
                         <div class="mb-2">
                           <label htmlFor="date">Date</label>
                           <input
                             type="date"
                             value={date}
+                            min={new Date().toISOString().split("T")[0]} // Set the min attribute to the current date
                             onChange={(e) => setDate(e.target.value)}
                             placeholder="Select Date"
                             class="form-control"
@@ -371,7 +451,12 @@ const ActivityLog = () => {
                       <button
                         type="button"
                         class="btn btn-primary"
-                        onClick={() => handleUpdate(editActivityId)}
+                        // class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        onClick={() => {
+                          handleUpdate(editActivityId);
+                        }}
                       >
                         Save changes
                       </button>

@@ -10,6 +10,7 @@ const activitySchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  // unique: true,
   description: {
     type: String,
     required: true,

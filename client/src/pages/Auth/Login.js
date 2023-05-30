@@ -10,8 +10,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [auth, setAuth] = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
+  const [isLogged, SetIsLogged] = useState("false");
 
   const handlesubmit = async (e) => {
     e.preventDefault();
@@ -37,17 +38,37 @@ const Login = () => {
       toast.error("Something went Wrong");
     }
   };
+
+  const navigate = useNavigate();
+  if (localStorage.getItem("auth")) {
+    return navigate("/");
+  }
   return (
     <Layout>
       <Header isDark={false} />
       {/* <div className="register"> */}
 
-      <div className="login template d-flex justify-content-center align-items-center vh-100  bg-dark bg-gradient">
+      {/* <div className="login template d-flex justify-content-center align-items-center vh-100  bg-dark bg-gradient"> */}
+      <div
+        className="login template d-flex justify-content-center align-items-center vh-100  "
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(33, 47, 61, 1) 35%, rgba(0, 212, 255, 1) 100%)",
+        }}
+      >
         <div className="form_container 50-w p-5 rounded bg-white">
           {/* <h1> Login Page </h1> <br /> */}
 
           <form onSubmit={handlesubmit}>
-            <h3 className="text-center"> Login Page </h3>
+            <h3
+              style={{
+                color: "rgba(0, 123, 255, 1)",
+              }}
+              className="text-center"
+            >
+              Login Account
+            </h3>
+            {/* <h3 className="text-center "> Login Account </h3> */}
             <div class="mb-2">
               <label htmlFor="email">Email</label>
               <input
@@ -74,7 +95,7 @@ const Login = () => {
                 required
               />
             </div>
-            <div class="mb-2">
+            {/* <div class="mb-2">
               <input
                 type="checkbox"
                 name="custom-control custom-checkbox"
@@ -83,12 +104,14 @@ const Login = () => {
               <label htmlFor="check" className="custom-input-label ms-2">
                 Remember me
               </label>
-            </div>
+            </div> */}
             {/* <div class="mb-3"> */}
-            <div class="d-grid">
-              <button type="submit" className="btn btn-primary ">
-                Login
-              </button>
+            <div class="mb-2 ">
+              <div class="d-grid">
+                <button type="submit" className="btn btn-primary ">
+                  Login
+                </button>
+              </div>
               {/* <br /> */}
               {/* <br /> */}
               {/* 

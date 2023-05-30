@@ -6,8 +6,10 @@ import styled from "styled-components";
 import WithBarTitle from "../components/reusable/WithBarTitle";
 import Button from "../components/reusable/Button";
 import Header from "./layouts/Header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Banner = () => {
+  
+
   return (
     <div>
       {/*  */}

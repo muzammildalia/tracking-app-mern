@@ -7,6 +7,10 @@
   "author": "MuzammilDalia",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.2",
     "bcrypt": "^5.1.0",
     "classnames": "^2.3.2",
     "colors": "^1.4.0",
