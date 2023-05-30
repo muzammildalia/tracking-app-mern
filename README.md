@@ -11,7 +11,7 @@ Exercise Tracking Application using MERN Stack.
 ## 1. Home Page
 ![1](https://github.com/muzammildalia/tracking-app-mern/assets/69090543/954e0239-dae8-4a9e-ac19-5105615e84d7)
 ## 2. Login Page
-![Login](https://github.com/muzammildalia/tracking-app-mern/assets/69090543/d5d8f163-1a88-4c76-a7a2-58cd259a69c1)
+![Login](https://github.com/muzammildalia/tracking-app-mern/assets/69090543/ea4302c7-2a41-4d29-94a6-92ddb6930c88)
 ## 2. Register Page
 ![Register](https://github.com/muzammildalia/tracking-app-mern/assets/69090543/c066835c-156a-4454-941f-534ba3f555c6)
 ## 3. Activity Cards Form
