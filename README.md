@@ -21,7 +21,7 @@ Exercise Tracking Application using MERN Stack.
 ## 5. Activity Cards Display
 ![activity cards Reister2](https://github.com/muzammildalia/tracking-app-mern/assets/57299635/e973aad9-d9e4-4c09-a5f9-e1721553dd8b)
 ## 5. Edit Activity Cards 
-![activity cards Reister2](https://github.com/muzammildalia/tracking-app-mern/assets/57299635/62dea13e-f7e7-4637-a193-8c8d75f8c8a7)
+![Edit activity1](https://github.com/muzammildalia/tracking-app-mern/assets/57299635/5e445912-fc5e-4b0d-b67b-329fb5a3188f)
 ## 6. Activity Cards After Update
 ![update cards](https://github.com/muzammildalia/tracking-app-mern/assets/57299635/12cbf642-a1c0-4197-bbad-5ec7bd6145c0)
 ## 7. Delete Cards
