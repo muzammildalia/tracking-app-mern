@@ -27,7 +27,7 @@ Exercise Tracking Application using MERN Stack.
 ## 7. Delete Cards
 ![delete cards](https://github.com/muzammildalia/tracking-app-mern/assets/57299635/2b81d778-8db3-4303-ad3b-10f98a167cfa)
 # Folder and File Structure
-Front End Folder Structure
+## Front End Folder Structure
 ![frontfolder](https://github.com/muzammildalia/tracking-app-mern/assets/57299635/9692a5ec-b16e-4644-be6e-3692a2279e8c)
-Back End Folder Structure
+## Back End Folder Structure
 ![backfolder](https://github.com/muzammildalia/tracking-app-mern/assets/57299635/5a971ab9-2041-444c-9b0f-bae0d58024b6)
