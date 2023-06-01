@@ -5,14 +5,14 @@ import axios from "axios";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import Header from "../../components/layouts/Header";
-import "./style.css";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [auth, setAuth] = useAuth();
-  // const navigate = useNavigate();
+
   const location = useLocation();
-  const [isLogged, SetIsLogged] = useState("false");
+
 
   const handlesubmit = async (e) => {
     e.preventDefault();
@@ -95,35 +95,12 @@ const Login = () => {
                 required
               />
             </div>
-            {/* <div class="mb-2">
-              <input
-                type="checkbox"
-                name="custom-control custom-checkbox"
-                id="check"
-              />
-              <label htmlFor="check" className="custom-input-label ms-2">
-                Remember me
-              </label>
-            </div> */}
-            {/* <div class="mb-3"> */}
             <div class="mb-2 ">
               <div class="d-grid">
                 <button type="submit" className="btn btn-primary ">
                   Login
                 </button>
               </div>
-              {/* <br /> */}
-              {/* <br /> */}
-              {/* 
-              <button
-                type="button"
-                class="btn btn-primary"
-                onClick={() => {
-                  navigate("/forgot-password");
-                }}
-              >
-                Forgot Password
-              </button> */}
             </div>
             <p className="text-end mt-2">
               {" "}

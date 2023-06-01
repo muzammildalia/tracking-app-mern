@@ -145,7 +145,6 @@ const Footer = () => {
             <Link to="/" className="text-white">
               Fitness.com
             </Link>
-            {/* <a className="text-white" href="https://mdbootstrap.com/">Fitness.com</a> */}
           </div>
           {/* Copyright */}
         </footer>

@@ -25,7 +25,7 @@ const ActivityLog = () => {
   const navigate = useNavigate();
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
 
-  // const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     const fetchUserActivities = async () => {
@@ -115,14 +115,14 @@ const ActivityLog = () => {
           prevActivities.map((activity) =>
             activity._id === editActivityId
               ? {
-                  ...activity,
-                  title,
-                  description,
-                  activity_type: activityType,
-                  duration,
-                  durationUnit,
-                  date,
-                }
+                ...activity,
+                title,
+                description,
+                activity_type: activityType,
+                duration,
+                durationUnit,
+                date,
+              }
               : activity
           )
         );
@@ -142,22 +142,6 @@ const ActivityLog = () => {
     setDeleteConfirmationId(activityId);
   };
 
-  // const handleDelete = async (activityId) => {
-  //   Swal.fire({
-  //     title: "Confirm Delete",
-  //     text: "Are you sure you want to delete this activity?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonText: "Yes, delete it!",
-  //     cancelButtonText: "No, cancel",
-  //     reverseButtons: true,
-  //   }).then(async (result) => {
-  //     if (result.isConfirmed) {
-  //       // User clicked "Delete"
-  //       await confirmDelete(activityId);
-  //     }
-  //   });
-  // };
 
   //new
   const confirmDelete = async (activityId) => {
@@ -194,28 +178,6 @@ const ActivityLog = () => {
     }
   };
 
-  //end
-
-  // const confirmDelete = async (activityId) => {
-  //   try {
-  //     const res = await axios.delete(
-  //       `${process.env.REACT_APP_API}/api/v1/activity/remove-activities/${activityId}`
-  //     );
-  //     if (res && res.data.success) {
-  //       toast.success(res.data.message);
-
-  //       navigate("/");
-  //       setActivities((prevActivities) =>
-  //         prevActivities.filter((activity) => activity._id !== activityId)
-  //       );
-  //     } else {
-  //       toast.error(res.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     toast.error("Something went wrong");
-  //   }
-  // };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -270,58 +232,12 @@ const ActivityLog = () => {
                         // data-bs-toggle="modal"
                         // data-bs-target="#exampleModal"
                         onClick={() => confirmDelete(activity._id)}
-                        // onClick={() => handleDelete(activity._id)}
+                      // onClick={() => handleDelete(activity._id)}
                       >
                         <i class="fas fa-trash-alt"></i> Delete
                       </button>
                     </div>
-                    {/* <div
-                      class="modal fade"
-                      id="exampleModal"
-                      tabindex="-1"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h1
-                              class="modal-title fs-5 text-danger"
-                              id="exampleModalLabel"
-                            >
-                              confirm delete
-                            </h1>
-                            <button
-                              type="button"
-                              class="btn-close"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            ></button>
-                          </div>
-                          <div class="modal-body">...</div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-bs-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                              onClick={() => confirmDelete(activity._id)}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
                   </div>
-                  {/* end */}
                 </div>
               ))}
 

@@ -41,22 +41,6 @@ const Activity = () => {
     setDescription(trimmedValue);
   };
 
-  // const handleDurationChange = (e) => {
-  //   const inputDuration = parseInt(e.target.value);
-  //   if (e.target.value === "") {
-  //     setDuration(e.target.value);
-  //     setErrorMessage("");
-  //   } else if (
-  //     Number.isNaN(inputDuration) ||
-  //     inputDuration < 0 ||
-  //     inputDuration > 24
-  //   ) {
-  //     setErrorMessage("Enter a valid duration between 0 and 24 hours");
-  //   } else {
-  //     setDuration(e.target.value);
-  //     setErrorMessage("");
-  //   }
-  // };
 
   const handleDurationChange = (e) => {
     const inputValue = e.target.value;

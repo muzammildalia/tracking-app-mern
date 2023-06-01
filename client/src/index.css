@@ -32,6 +32,7 @@ body {
   border: 1px solid white;
   color: white;
 }
+
 .Build {
   font-size: 3.2rem;
   text-transform: uppercase;
@@ -42,42 +43,27 @@ body {
   animation: fadeInLeft;
   animation-duration: 1.3s;
 }
+
 @media (max-width: 998px) {
   .Build {
     font-size: 3rem;
   }
 }
-/* @media (max-width: 998px) {
-  html {
-    font-size: 100%;
-  }
-} */
-/* Replace with your desired light background color  */
+
 .dropdown-menu-light {
   background-color: #f8f9fa;
 }
+
 /* Replace with your desired text color for light mode */
 .dropdown-menu-light .dropdown-item {
   color: #000000;
 }
-/* Replace with your desired hover/focus background color for light mode */
-/* Replace with your desired hover/focus text color for light mode */
+
 .dropdown-menu-light .dropdown-item:hover,
 .dropdown-menu-light .dropdown-item:focus {
   background-color: #e9ecef;
   color: #000000;
 }
-
-/* .activity-card {
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.2);
-  border: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-} */
-/* .activity-card:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease-in-out;
-} */
 
 .edit-button:hover,
 .delete-button:hover {
@@ -86,9 +72,11 @@ body {
   transform: scale(1.05);
   transition: transform 0.3s ease-in-out;
 }
+
 .error-message {
   color: red;
 }
+
 .errorAdddress {
   color: red;
 }
